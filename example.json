@@ -1,0 +1,47 @@
+{
+    "builders": [
+        {
+            "type": "docker",
+            "image": "ubuntu",
+            "commit": true
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "scripts": ["shell/example.sh"]
+        },
+        {
+            "type": "shell-local",
+            "command": "shell/example.sh"
+        },
+        {
+            "type": "file",
+            "source": "files/example",
+            "destination": "/tmp/example"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo apt-get -y install software-properties-common",
+                "sudo apt-add-repository ppa:ansible/ansible",
+                "sudo apt-get update",
+                "sudo apt-get -y install ansible"
+            ]
+        },
+        {
+            "type": "ansible-local",
+            "playbook_file": "ansible/example.yml",
+            "playbook_dir": "ansible"
+        },
+        {
+            "type": "shell",
+            "inline": ["sudo apt-get -y install curl"]
+        },
+        {
+            "type": "chef-solo",
+            "cookbook_paths": ["chef/cookbooks"],
+            "run_list": ["example"]
+        }
+    ]
+}

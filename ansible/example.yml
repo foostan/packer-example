@@ -1,0 +1,6 @@
+---
+- name: Setup a example environment
+  hosts: all
+  roles:
+    - git
+
